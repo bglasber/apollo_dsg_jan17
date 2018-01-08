@@ -257,10 +257,29 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Client Query Streams}
+\begin{frame}[fragile]{Query Transition Graph}
     \begin{figure}
         \includegraphics[scale=0.2]{apollo_transition_graph}
     \end{figure}
+    \visible<2->{
+        $P(Qt_{2}|Qt_{1};T\leq\Delta t) = \frac{75}{75} = 1$\\
+    }
+    \visible<3->{
+        $P(Qt_{3}|Qt_{1};T\leq\Delta t) = \frac{10}{50} = \frac{1}{5}$
+    }
+\end{frame}
+
+\begin{frame}[fragile]{Query Transition Graph}
+    The query transition graphs tells us:
+    \begin{itemize}
+        \item{How often a query template is executed}
+        \visible<2->{
+        \item{Which query templates are \alert{correlated} with each other}
+        }
+    \end{itemize}
+    \visible<3->{
+        { \color{red} Need parameter mappings for predictive caching!}
+    }
 \end{frame}
 
 \end{document}
