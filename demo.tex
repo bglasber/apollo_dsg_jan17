@@ -1,0 +1,266 @@
+\documentclass[10pt]{beamer}
+
+\usetheme[progressbar=frametitle]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\usepackage{comment}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+\newcommand{\cfbox}[2]{%
+    \colorlet{currentcolor}{.}%
+    {\color{#1}%
+    \fbox{\color{currentcolor}#2}}%
+}
+
+\title{Apollo}
+%\subtitle{A modern beamer theme}
+% \date{\today}
+\date{}
+\author{Matthias Vogelgesang}
+\institute{Center for modern beamer themes}
+% \titlegraphic{\hfill\includegraphics[height=1.5cm]{logo.pdf}}
+
+\begin{document}
+
+\begin{comment}
+\begin{frame}{}
+\vspace*{-0.2cm}
+\hspace*{-1.07cm}
+\includegraphics[keepaspectratio=true,width=1.03\paperwidth]{title_slide}
+\end{frame}
+\end{comment}
+
+\begin{frame}{Worldwide Client/Server Distribution}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.45]{apollo_google_dc}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Worldwide Client/Server Distribution}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.45]{apollo_google_vancouver}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Worldwide Client/Server Distribution}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.45]{apollo_google_oceania}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Latency Effects on Clients}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.45]{apollo_bing_latency}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Worldwide Client/Server Distribution}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.45]{apollo_google_oceania_en}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{A Solved Problem?}
+    \begin{itemize}
+        \item{Cache data on edge nodes and reduce latency!}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Consistency?}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.45]{apollo_google_oceania_en_sync}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Google Request Breakdown}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.4]{apollo_response_time_bd}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{The State of the Art}
+    \begin{itemize}
+        \item{Cache \alert{static data} on edge nodes and reduce latency!}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{A Solved Problem?}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.4]{apollo_response_time_bd}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{A Solved Problem?}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.4]{apollo_response_time_bd_2}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}[fragile]{Dynamic Data Requests}
+\end{frame}
+
+\begin{frame}[fragile]{Dynamic Data Requests}
+        \begin{lstlisting}[
+                   language=SQL,
+                   basicstyle=\ttfamily,
+                   commentstyle=\color{gray},
+                   escapeinside={(*@}{@*)},
+                ]
+1. SELECT (*@ \cfbox{red}{C\_ID} @*) FROM CUSTOMER WHERE 
+C_UNAME = @C_UN and C_PASSWD = @C_PAS
+
+2. SELECT MAX(O_ID) FROM ORDERS WHERE
+O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
+        \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Query Patterns}
+    Execution of a query informs which queries will execute next, and
+    with what parameters.
+\end{frame}
+
+\begin{frame}[fragile]{Dynamic Data Requests}
+        \begin{lstlisting}[
+                   language=SQL,
+                   basicstyle=\ttfamily,
+                   commentstyle=\color{gray},
+                   escapeinside={(*@}{@*)},
+                ]
+1. SELECT (*@ \cfbox{red}{C\_ID} @*) FROM CUSTOMER WHERE 
+C_UNAME = @C_UN and C_PASSWD = @C_PAS
+
+2. SELECT MAX(O_ID) FROM ORDERS WHERE
+O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
+        \end{lstlisting}
+\end{frame}
+
+\begin{frame}{Predictive Caching}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.17]{apollo_predictive_execution}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Predictive Caching}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.17]{apollo_predictive_execution_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Predictive Caching}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.17]{apollo_predictive_execution_3}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Predictive Caching}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.17]{apollo_predictive_execution_4}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Apollo: Caching Dynamic Data on a Global Scale}
+    Requirements:
+    \begin{itemize}
+        \visible<2->{
+            \item{Adaptive method to cache based on client behaviour patterns}
+        }
+        \visible<3->{
+            \item{Computationally efficient means of managing updates to cached data}
+        }
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Predictive Query Model}
+
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \includegraphics[scale=0.13]{apollo_overview}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{A Query Submission}
+    \begin{center}
+SELECT \cfbox{red}{C\_ID} FROM CUSTOMER WHERE
+C\_UNAME = 'Alice' and C\_PASSWD = 'pass'
+
+SELECT MAX(O\_ID) FROM ORDERS WHERE
+O\_C\_ID = \cfbox{red}{3}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Abstracting to Query Templates}
+    \begin{center}
+SELECT \cfbox{red}{C\_ID} FROM CUSTOMER WHERE
+C\_UNAME = \textbf{?} and C\_PASSWD = \textbf{?}
+
+SELECT MAX(O\_ID) FROM ORDERS WHERE
+O\_C\_ID = \cfbox{red}{\textbf{?}}
+    \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_3}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_4}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_5}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_transition_graph}
+    \end{figure}
+\end{frame}
+
+\end{document}
