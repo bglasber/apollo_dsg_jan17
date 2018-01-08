@@ -282,4 +282,121 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     }
 \end{frame}
 
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.25]{apollo_parameter_mappings}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.25]{apollo_parameter_mappings_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.25]{apollo_parameter_mappings_3}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.25]{apollo_parameter_mappings_4}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Pipelining Query Predictions}
+    \begin{figure}
+        \includegraphics[scale=0.22]{apollo_query_pipeline}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Formalizing...}
+A \alert{fully defined query template} (FDQ) $\mathit{Qt}_j$ has all of its inputs provided
+by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{Qt_i}_2, \ldots, \mathit{Qt_i}_m$,
+where each $\mathit{Qt_i}_k, \forall k \in [1,m]$, is a fully defined query template.
+\end{frame}
+
+\begin{frame}[fragile]{Example FDQs}
+    \begin{figure}
+        \includegraphics[scale=0.22]{apollo_query_pipeline}
+    \end{figure}
+    \visible<2->{
+        $\mathit{Qt}_2$ and $\mathit{Qt}_3$ are FDQs.\\
+    }
+    \visible<3->{
+        $\mathit{Qt}_1$ is a dependency query of $\mathit{Qt}_2$.\\
+        $\mathit{Qt}_2$ is a dependency query of $\mathit{Qt}_3$.\\
+    }
+    \visible<4->{
+        FDQs and their dependency queries form the \alert{dependency graph}.
+    }
+\end{frame}
+
+\begin{frame}[fragile]{Core Prediction Routine}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.22]{apollo_cpr}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Core Prediction Routine}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.22]{apollo_cpr_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Core Prediction Routine}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.22]{apollo_cpr_3}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Core Prediction Routine}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.22]{apollo_cpr_4}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Core Prediction Routine}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.22]{apollo_cpr_5}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Core Prediction Routine}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.22]{apollo_cpr}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Always Defined Queries}
+    An \alert{always defined query} (ADQ) is an FDQ where all of its prior queries (recursively) are also FDQs.\\
+    \hfill\newline
+    \visible<2->{
+       In other words, its dependencies are \alert{always satisfied}, and the query can be executed and cached at any time! 
+    }
+\end{frame}
+
+\begin{frame}[fragile]{ADQ Reload}
+Reload an ADQ if:
+\begin{itemize}
+    \visible<2->{
+    \item{The ADQ is \emph{not} already cached}
+    }
+    \visible<3->{
+    \item{The ADQ is considered valuable: \\
+$P(Q)\cdot C(Q) \geq \alpha$
+    }
+    }
+\end{itemize}
+
+\end{frame}
+
 \end{document}
