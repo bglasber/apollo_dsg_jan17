@@ -372,7 +372,7 @@ where each $\mathit{Qt_i}_k, \forall k \in [1,m]$, is a fully defined query temp
 
 \begin{frame}[fragile]{Always Defined Queries}
     An \alert{always defined query} (ADQ) is an FDQ where all of its prior queries (recursively) are also FDQs.\\
-    \hfill\newline
+\medskip
     \visible<2->{
        In other words, its dependencies are \alert{always satisfied}, and the query can be executed and cached at any time! 
     }
@@ -390,7 +390,6 @@ $P(\mathit{Qt})\cdot C(\mathit{Qt}) \geq \alpha$
     }
     }
 \end{itemize}
-
 \end{frame}
 
 \section{Apollo}
@@ -448,5 +447,123 @@ $P(\mathit{Qt})\cdot C(\mathit{Qt}) \geq \alpha$
 Insert Oz Map
 \end{frame}
 
+\begin{frame}[fragile]{Apollo Architecture}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_arch_diagram}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Architecture}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_arch_diagram_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Architecture}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_arch_diagram_3}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Architecture}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_arch_diagram_5}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Architecture}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_arch_diagram_6}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Architecture}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_arch_diagram_7}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Architecture}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_arch_diagram_8}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Cache Matching}
+Key query results by \alert{hash of query template}.
+\begin{itemize}
+    \item{Fast lookup for incoming queries}
+    \item{Avoids \alert{query containment}, but cannot use portions of result sets shared by other queries}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Cache Invalidation}
+Standard approaches to invalidate caches will not scale globally!\\
+\medskip
+\visible<2->{
+Use \alert{client sessions} and Memcached's LRU to invalidate and implicitly evict
+}
+\end{frame}
+
+\begin{frame}[fragile]{Client Sessions}
+Clients are guaranteed to see state at least as recent as what they last read/wrote.
+\end{frame}
+
+\begin{frame}[fragile]{Client Sessions}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_client_sessions}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Sessions}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_client_sessions_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Sessions}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_client_sessions_3}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Sessions}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_client_sessions_4}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Sessions}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_client_sessions_6}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Sessions}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_client_sessions_7}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Sessions}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_client_sessions_8}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Sessions}
+    \begin{figure}
+        \includegraphics[scale=0.17]{apollo_client_sessions_9}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Practical Considerations}
+    Version vectors and per-table
+\end{frame}
+
+\begin{frame}[fragile]{Other Benefits of Client Sessions}
+    Pin clients to Apollo instances\\
+    Predict when cache entries will be invalidated
+\end{frame}
 
 \end{document}
