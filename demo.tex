@@ -40,21 +40,27 @@
 \end{frame}
 \end{comment}
 
-\begin{frame}{Worldwide Client/Server Distribution}
+\begin{frame}{Worldwide Client/Data Center Distribution}
     \begin{figure}
         \center
         \includegraphics[scale=0.45]{apollo_google_dc}
     \end{figure}
 \end{frame}
 
-\begin{frame}{Worldwide Client/Server Distribution}
+\begin{frame}{Worldwide Client/Data Center Distribution}
+    \begin{figure}
+        \includegraphics[scale=0.36]{apollo_google_datacenter}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Worldwide Client/Data Center Distribution}
     \begin{figure}
         \center
         \includegraphics[scale=0.45]{apollo_google_vancouver}
     \end{figure}
 \end{frame}
 
-\begin{frame}{Worldwide Client/Server Distribution}
+\begin{frame}{Worldwide Client/Data Center Distribution}
     \begin{figure}
         \center
         \includegraphics[scale=0.45]{apollo_google_oceania}
@@ -68,7 +74,15 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{Worldwide Client/Server Distribution}
+\begin{frame}{Edge Nodes}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.45]{apollo_blade.png}
+    \end{figure}
+    Company-supplied, ISP hosted servers with limited compute and storage capabilities.
+\end{frame}
+
+\begin{frame}{Worldwide Client/Edge Node Distribution}
     \begin{figure}
         \center
         \includegraphics[scale=0.45]{apollo_google_oceania_en}
@@ -78,20 +92,28 @@
 \begin{frame}{A Solved Problem?}
     \begin{itemize}
         \item{Cache data on edge nodes and reduce latency!}
+        \visible<2->{
+            \item{{\color{red} Limited storage space for caching!} }
+            \item{{\color{red} Data freshness?}}
+        }
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Consistency?}
+\begin{frame}{Amazon Webpage Breakdown}
     \begin{figure}
         \center
-        \includegraphics[scale=0.45]{apollo_google_oceania_en_sync}
+        \hspace*{-0.5cm}
+        \vspace*{1cm}
+        \includegraphics[scale=0.17]{apollo_amazon_page}
     \end{figure}
 \end{frame}
 
-\begin{frame}{Google Request Breakdown}
+\begin{frame}{Amazon Webpage Breakdown}
     \begin{figure}
         \center
-        \includegraphics[scale=0.4]{apollo_response_time_bd}
+        \hspace*{-0.5cm}
+        \vspace*{1cm}
+        \includegraphics[scale=0.17]{apollo_amazon_static}
     \end{figure}
 \end{frame}
 
@@ -101,22 +123,22 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{A Solved Problem?}
+\begin{frame}{Amazon Webpage Breakdown}
     \begin{figure}
         \center
-        \includegraphics[scale=0.4]{apollo_response_time_bd}
+        \hspace*{-0.5cm}
+        \vspace*{1cm}
+        \includegraphics[scale=0.17]{apollo_amazon_page}
     \end{figure}
 \end{frame}
 
-\begin{frame}{A Solved Problem?}
+\begin{frame}{Amazon --- Dynamic Data}
     \begin{figure}
         \center
-        \includegraphics[scale=0.4]{apollo_response_time_bd_2}
+        \hspace*{-0.5cm}
+        \vspace*{1cm}
+        \includegraphics[scale=0.17]{apollo_amazon_dynamic}
     \end{figure}
-\end{frame}
-
-
-\begin{frame}[fragile]{Dynamic Data Requests}
 \end{frame}
 
 \begin{frame}[fragile]{Dynamic Data Requests}
