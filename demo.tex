@@ -80,12 +80,28 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{Edge Nodes}
+\begin{frame}{Worldwide Client/Edge Node Distribution}
     \begin{figure}
         \center
-        \includegraphics[scale=0.45]{apollo_blade.png}
+        \includegraphics[scale=0.45]{apollo_google_oceania_en}
     \end{figure}
-    Company-supplied, ISP hosted servers with limited compute and storage capabilities.
+\end{frame}
+
+\begin{frame}{A Problem}
+    \begin{itemize}
+        \item{Existing edge caches support only \alert{static data}!}
+        \visible<2->{
+            \item{A majority of webpages rely on personalization and changing data!~\cite{dbproxy}}
+        }
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Extending Edge Cache Support}
+    \begin{figure}
+        \center
+        \hspace*{-1.5cm}
+        \includegraphics[scale=0.17]{apollo_edge_cache_apollo}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Worldwide Client/Edge Node Distribution}
@@ -95,57 +111,64 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{A Solved Problem?}
+\begin{frame}{Extending Edge Cache Support}
+    \begin{figure}
+        \center
+        \hspace*{-1.5cm}
+        \includegraphics[scale=0.17]{apollo_ec_dbl}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Extending Edge Cache Support}
+    \begin{figure}
+        \center
+        \hspace*{-1.5cm}
+        \includegraphics[scale=0.17]{apollo_ec_dbl_learn}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Extending Edge Cache Support}
+    \begin{figure}
+        \center
+        \hspace*{-1.5cm}
+        \includegraphics[scale=0.17]{apollo_ec_dbl}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Extending Edge Cache Support}
+    \begin{figure}
+        \center
+        \hspace*{-1.5cm}
+        \includegraphics[scale=0.17]{apollo_ec_upd}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Extending Edge Cache Support}
+    \begin{figure}
+        \center
+        \hspace*{-1.5cm}
+        \includegraphics[scale=0.17]{apollo_ec_upd_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Apollo: Caching Dynamic Data on a Global Scale}
+    Requirements:
     \begin{itemize}
-        \item{Cache data on edge nodes and reduce latency!}
         \visible<2->{
-            \item{{\color{red} Limited storage space for caching!} }
-            \item{{\color{red} Data freshness?}}
+            \item{\alert{Adaptive} method to cache based on client behaviour patterns}
+        }
+        \visible<3->{
+            \item{\alert{Computationally efficient} means of managing updates to cached data}
         }
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Amazon Webpage Breakdown}
-    \begin{figure}
-        \center
-        \hspace*{-0.5cm}
-        \vspace*{1cm}
-        \includegraphics[scale=0.17]{apollo_amazon_page}
-    \end{figure}
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
 \end{frame}
 
-\begin{frame}{Amazon Webpage Breakdown}
-    \begin{figure}
-        \center
-        \hspace*{-0.5cm}
-        \vspace*{1cm}
-        \includegraphics[scale=0.17]{apollo_amazon_static}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{The State of the Art}
-    \begin{itemize}
-        \item{Cache \alert{static data} on edge nodes and reduce latency!}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Amazon Webpage Breakdown}
-    \begin{figure}
-        \center
-        \hspace*{-0.5cm}
-        \vspace*{1cm}
-        \includegraphics[scale=0.17]{apollo_amazon_page}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Amazon --- Dynamic Data}
-    \begin{figure}
-        \center
-        \hspace*{-0.5cm}
-        \vspace*{1cm}
-        \includegraphics[scale=0.17]{apollo_amazon_dynamic}
-    \end{figure}
-\end{frame}
+\section{Predictive Query Model}
 
 \begin{frame}[fragile]{Dynamic Data Requests}
         \begin{lstlisting}[
@@ -210,24 +233,7 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
     \end{figure}
 \end{frame}
 
-\begin{frame}{Apollo: Caching Dynamic Data on a Global Scale}
-    Requirements:
-    \begin{itemize}
-        \visible<2->{
-            \item{Adaptive method to cache based on client behaviour patterns}
-        }
-        \visible<3->{
-            \item{Computationally efficient means of managing updates to cached data}
-        }
-    \end{itemize}
-\end{frame}
 
-\begin{frame}{Table of contents}
-  \setbeamertemplate{section in toc}[sections numbered]
-  \tableofcontents[hideallsubsections]
-\end{frame}
-
-\section{Predictive Query Model}
 
 \begin{frame}[fragile]{A Query Submission}
     \begin{center}
