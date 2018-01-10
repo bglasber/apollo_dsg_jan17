@@ -39,16 +39,11 @@
 %\includegraphics[keepaspectratio=true,width=1.03\paperwidth]{title_slide}
 \end{frame}
 
-\begin{frame}{Worldwide Client/Data Center Distribution}
+\begin{frame}{Simple Web Application Architecture}
     \begin{figure}
         \center
-        \includegraphics[scale=0.45]{apollo_google_dc}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Worldwide Client/Data Center Distribution}
-    \begin{figure}
-        \includegraphics[scale=0.36]{apollo_google_datacenter}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.2]{apollo_intro_arch}
     \end{figure}
 \end{frame}
 
@@ -74,9 +69,14 @@
 \end{frame}
 
 \begin{frame}{Latency Effects on Clients}
+    Increased latency reduces \alert{user engagement}, and consequently \alert{revenue}!~\cite{bing}
+\end{frame}
+
+\begin{frame}{Edge Caching}
     \begin{figure}
         \center
-        \includegraphics[scale=0.45]{apollo_bing_latency}
+        \hspace*{-1.5cm}
+        \includegraphics[scale=0.17]{apollo_edge_cache}
     \end{figure}
 \end{frame}
 
@@ -593,5 +593,11 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     Pin clients to Apollo instances\\
     Predict when cache entries will be invalidated
 \end{frame}
+
+\begin{frame}[allowframebreaks]
+    \bibliographystyle{abbrv}
+    \bibliography{demo}
+\end{frame}
+
 
 \end{document}
