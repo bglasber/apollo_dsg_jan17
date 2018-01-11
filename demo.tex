@@ -100,21 +100,6 @@
     \begin{figure}
         \center
         \hspace*{-1.5cm}
-        \includegraphics[scale=0.17]{apollo_edge_cache_apollo}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Worldwide Client/Edge Node Distribution}
-    \begin{figure}
-        \center
-        \includegraphics[scale=0.45]{apollo_google_oceania_en}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Extending Edge Cache Support}
-    \begin{figure}
-        \center
-        \hspace*{-1.5cm}
         \includegraphics[scale=0.17]{apollo_ec_dbl}
     \end{figure}
 \end{frame}
@@ -125,64 +110,6 @@
         \hspace*{-1.5cm}
         \includegraphics[scale=0.17]{apollo_ec_dbl_learn}
     \end{figure}
-\end{frame}
-
-\begin{frame}{Extending Edge Cache Support}
-    \begin{figure}
-        \center
-        \hspace*{-1.5cm}
-        \includegraphics[scale=0.17]{apollo_ec_dbl}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Extending Edge Cache Support}
-    \begin{figure}
-        \center
-        \hspace*{-1.5cm}
-        \includegraphics[scale=0.17]{apollo_ec_upd}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Extending Edge Cache Support}
-    \begin{figure}
-        \center
-        \hspace*{-1.5cm}
-        \includegraphics[scale=0.17]{apollo_ec_upd_2}
-    \end{figure}
-\end{frame}
-
-\begin{frame}{Apollo: Caching Dynamic Data on a Global Scale}
-    Requirements:
-    \begin{itemize}
-        \visible<2->{
-            \item{\alert{Adaptive} method to cache based on client behaviour patterns}
-        }
-        \visible<3->{
-            \item{\alert{Computationally efficient} means of managing updates to cached data}
-        }
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Table of contents}
-  \setbeamertemplate{section in toc}[sections numbered]
-  \tableofcontents[hideallsubsections]
-\end{frame}
-
-\section{Predictive Query Model}
-
-\begin{frame}[fragile]{Dynamic Data Requests}
-        \begin{lstlisting}[
-                   language=SQL,
-                   basicstyle=\ttfamily,
-                   commentstyle=\color{gray},
-                   escapeinside={(*@}{@*)},
-                ]
-1. SELECT (*@ \cfbox{red}{C\_ID} @*) FROM CUSTOMER WHERE 
-C_UNAME = @C_UN and C_PASSWD = @C_PAS
-
-2. SELECT MAX(O_ID) FROM ORDERS WHERE
-O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
-        \end{lstlisting}
 \end{frame}
 
 \begin{frame}{Query Patterns}
@@ -233,6 +160,30 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
     \end{figure}
 \end{frame}
 
+
+
+
+\begin{frame}{Apollo: Caching Dynamic Data on a Global Scale}
+    We developed Apollo, a middelware system that:
+    \begin{itemize}
+        \visible<2->{
+            \item{Uses online learning to adapt cache behaviour based on client behaviour patterns}
+        }
+        \visible<3->{
+            \item{\alert{Predictively executes} and caches query results to reduce client latency}
+        }
+        \visible<4->{
+            \item{Employs a \alert{computationally efficient} means of managing updates to cached data at global scale.}
+        }
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Table of contents}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Predictive Query Model}
 
 
 \begin{frame}[fragile]{A Query Submission}
