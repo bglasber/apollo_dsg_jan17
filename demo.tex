@@ -33,10 +33,9 @@
 \begin{document}
 
 \begin{frame}{}
-    Title slide goes here
-%\vspace*{-0.2cm}
-%\hspace*{-1.07cm}
-%\includegraphics[keepaspectratio=true,width=1.03\paperwidth]{title_slide}
+\vspace*{-0.2cm}
+\hspace*{-1.07cm}
+\includegraphics[keepaspectratio=true,width=1.03\paperwidth]{title_slide}
 \end{frame}
 
 \begin{frame}{Simple Web Application Architecture}
@@ -205,6 +204,37 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
 
 \begin{frame}[fragile]{Client Query Streams}
     \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_0}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_0_2}
+    \end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_0_3}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_0_4}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_0_5}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
         \includegraphics[scale=0.2]{apollo_client_query_stream}
     \end{figure}
 \end{frame}
@@ -282,7 +312,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Pipelining Query Predictions}
+\begin{frame}[fragile]{Query Dependency Graph}
     \begin{figure}
         \includegraphics[scale=0.22]{apollo_query_pipeline}
     \end{figure}
@@ -362,7 +392,7 @@ where each $\mathit{Qt_i}_k, \forall k \in [1,m]$, is a fully defined query temp
     An \alert{always defined query} (ADQ) is an FDQ where all of its prior queries (recursively) are also FDQs.\\
 \medskip
     \visible<2->{
-       In other words, its dependencies are \alert{always satisfied}, and the query can be executed and cached at any time! 
+       In other words, its dependencies are \alert{always satisfied}, and the query can be executed and cached at any time!
     }
 \end{frame}
 
