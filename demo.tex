@@ -164,10 +164,10 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
     We developed Apollo, a middleware system that:
     \begin{itemize}
         \visible<2->{
-            \item{Uses \alert{online learning} to adapt cache behaviour based on client behaviour patterns}
+            \item{Uses \alert{online learning} to adapt cache behaviour based on client behaviour patterns.}
         }
         \visible<3->{
-            \item{\alert{Predictively executes} and caches query results to reduce client latency}
+            \item{\alert{Predictively executes} and caches query results to reduce client latency.}
         }
         \visible<4->{
             \item{Employs a \alert{computationally efficient} means of managing updates to cached data at global scale.}
@@ -292,6 +292,12 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
 A \alert{fully defined query template} (FDQ) $\mathit{Qt}_j$ has all of its inputs provided
 by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{Qt_i}_2, \ldots, \mathit{Qt_i}_m$,
 where each $\mathit{Qt_i}_k, \forall k \in [1,m]$, is a fully defined query template.
+\end{frame}
+
+\begin{frame}[fragile]{On Write FDQs}
+    Although some write queries (INSERT/UPDATE/DELETE) \alert{could} be predicted, incorrect predictions would result
+    in modified database state that would need to be undone later.
+    By predictively executing only read queries, we keep our caching behaviour \alert{strictly complementary}.
 \end{frame}
 
 \begin{frame}[fragile]{Example FDQs}
@@ -425,10 +431,6 @@ $P(\mathit{Qt})\cdot C(\mathit{Qt}) \geq \alpha$
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Insert Oz Map}
-Insert Oz Map
-\end{frame}
-
 \begin{frame}[fragile]{Apollo Architecture}
     \begin{figure}
         \includegraphics[scale=0.17]{apollo_arch_diagram}
@@ -479,6 +481,11 @@ Key query results by \alert{hash of query template}.
 \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Publish---Subscribe Model}
+Concurrent requests proxied to the remote DB or memcached for the same read-query will be blocked until the original query has returned.
+That query's result set will be \alert{forwarded} to the others.
+\end{frame}
+
 \begin{frame}[fragile]{Cache Invalidation}
 Standard approaches to invalidate caches will not scale globally!\\
 \medskip
@@ -489,63 +496,149 @@ Use \alert{client sessions} and Memcached's LRU to invalidate and implicitly evi
 
 \begin{frame}[fragile]{Client Sessions}
 Clients are guaranteed to see state at least as recent as what they last read/wrote.
+    \begin{itemize}
+    \visible<2->{
+    \item{\alert{Writes} and \alert{``future reads''} update client version and cause invalidations.}
+    }
+    \visible<3->{
+    \item{\alert{Client-centric} approach to caching!}
+    }
+    \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Client Sessions}
+\begin{frame}{Benefits}
     \begin{figure}
-        \includegraphics[scale=0.17]{apollo_client_sessions}
+        \center
+        \hspace*{-1.5cm}
+        \includegraphics[scale=0.17]{apollo_ec_dbl}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Client Sessions}
+\begin{frame}{Benefits}
     \begin{figure}
-        \includegraphics[scale=0.17]{apollo_client_sessions_2}
+        \center
+        \hspace*{-1.5cm}
+        \includegraphics[scale=0.17]{apollo_ec_upd}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Client Sessions}
+\begin{frame}[fragile]{Benefits}
+    \begin{itemize}
+        \item{Only \alert{local instance} needs to track client's session.}
+        \item{No global cache invalidations.}
+        \item{Can predict whether a prefetched query result will be used before invalidation!}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Session-Aware Caching}
     \begin{figure}
-        \includegraphics[scale=0.17]{apollo_client_sessions_3}
+        \includegraphics[scale=0.22]{apollo_query_pipeline}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Client Sessions}
+\begin{frame}[fragile]{Session-Aware Caching}
     \begin{figure}
-        \includegraphics[scale=0.17]{apollo_client_sessions_4}
+        \center
+        \includegraphics[scale=0.22]{apollo_write_boundary}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Client Sessions}
+\begin{frame}[fragile]{Session-Aware Caching}
     \begin{figure}
-        \includegraphics[scale=0.17]{apollo_client_sessions_6}
+        \center
+        \includegraphics[scale=0.22]{apollo_write_boundary_2}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Client Sessions}
+\begin{frame}[fragile]{Session-Aware Caching}
+    Before predictively executing any FDQ $f$, check if there are upcoming writes that would
+    invalidate the results!
+    \begin{itemize}
+    \visible<2->{
+    \item{Maintain multiple client query graphs with different $\Delta t$ widths}
+    \item{Find the query graph with width $\Delta t$ greater than that matches of $f$'s estimated response time}
+    \item{Crawl forward from client's last executed query and calculate likelihood of query occurring that will invalidate $f$}
+    }
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example}
+    \alert{Problem:}\\
+    Result set from client submitted $\mathit{Qt}_1$ just came back. We have complete mappings from $\mathit{Qt}_1$ to
+    $\mathit{Qt}_2$ and from $\mathit{Qt}_2$ to $\mathit{Qt}_3$. Each query template takes an average of $t=2$ to execute. Do we execute $\mathit{Qt}_2$?
+    Do we execute $\mathit{Qt}_3$?
+\end{frame}
+
+\begin{frame}[fragile]{Do we execute $\mathit{Qt}_2$?}
+    $\mathit{Qt}_2$ is estimated to take $t=2$ to execute.
+    \visible<2>{
+        \begin{figure}
+            \center
+            \includegraphics[scale=0.17]{apollo_session_aware_caching}
+        \end{figure}
+    }
+\end{frame}
+
+\begin{frame}[fragile]{Do we execute $\mathit{Qt}_2$?}
+    $\mathit{Qt}_2$ is estimated to take $t=2$ to execute.
     \begin{figure}
-        \includegraphics[scale=0.17]{apollo_client_sessions_7}
+        \center
+        \includegraphics[scale=0.17]{apollo_session_aware_caching_2}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Client Sessions}
+\begin{frame}[fragile]{Follow out-arrows from $\mathit{Qt}_1$}
     \begin{figure}
-        \includegraphics[scale=0.17]{apollo_client_sessions_8}
+        \center
+        \includegraphics[scale=0.3]{apollo_session_aware_caching_3}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Client Sessions}
+\begin{frame}[fragile]{Follow out-arrows from $\mathit{Qt}_1$}
     \begin{figure}
-        \includegraphics[scale=0.17]{apollo_client_sessions_9}
+        \center
+        \includegraphics[scale=0.3]{apollo_session_aware_caching_4}
+    \end{figure}
+    \visible<2->{
+        $\mathit{Qt}_2$ is likely ($P(\mathit{Qt}_2|\mathit{Qt}_1;T\leq 2)=1.0$) to show up within $t=2$.\\
+        No queries predicted to invalidate the $\mathit{Qt}_2$'s result set, so execute it and cache it.
+    }
+\end{frame}
+
+\begin{frame}[fragile]{What about $\mathit{Qt}_3$?}
+    \begin{figure}
+        \includegraphics[scale=0.22]{apollo_query_pipeline}
+    \end{figure}
+    After $\mathit{Qt}_2$ has executed, should we execute $\mathit{Qt}_3$? \\
+    \visible<2->{
+        $\mathit{Qt}_3$ is estimated to take $t=2$ to execute.\\
+    }
+\end{frame}
+
+\begin{frame}[fragile]{Do we execute $\mathit{Qt}_2$?}
+    $\mathit{Qt}_3$ is estimated to take $t=2$ to execute.
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.17]{apollo_session_aware_caching_2}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Practical Considerations}
-    Version vectors and per-table
+\begin{frame}[fragile]{Follow out-arrows from $\mathit{Qt}_2$}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.27]{apollo_session_aware_caching_3}
+    \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Other Benefits of Client Sessions}
-    Pin clients to Apollo instances\\
-    Predict when cache entries will be invalidated
+\begin{frame}[fragile]{Follow out-arrows from $\mathit{Qt}_2$}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.27]{apollo_session_aware_caching_5}
+    \end{figure}
+    \visible<2->{
+        $\mathit{Qt}_w$ is likely ($P(\mathit{Qt}_w|\mathit{Qt}_2;T\leq 2)=0.75$) to show up within $t=2$.\\
+        $\mathit{Qt}_w$ will increase the client's session, so predictively executing $\mathit{Qt}_3$ is unlikely to be useful.
+    }
 \end{frame}
 
 \begin{frame}[allowframebreaks]
