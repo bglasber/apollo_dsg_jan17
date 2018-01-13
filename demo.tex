@@ -125,7 +125,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{Dynamic Data Requests}
-        \begin{lstlisting}[
+    \begin{lstlisting}[
                    language=SQL,
                    basicstyle=\ttfamily,
                    commentstyle=\color{gray},
@@ -136,7 +136,11 @@ C_UNAME = @C_UN and C_PASSWD = @C_PAS
 
 2. SELECT MAX(O_ID) FROM ORDERS WHERE
 O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
-        \end{lstlisting}
+    \end{lstlisting}
+
+\begin{center}
+\tiny{Taken from the Order Display Interaction in the TPC-W Benchmark.}
+\end{center}
 \end{frame}
 
 \begin{frame}{Predictive Caching}
@@ -174,7 +178,7 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
             \item{Uses \alert{online learning} to adapt cache behaviour based on client behaviour patterns.}
         }
         \visible<3->{
-            \item{\alert{Predictively executes} and caches query results to reduce client latency.}
+            \item{\alert{Predictively executes} and caches query results to reduce client response time.}
         }
         \visible<4->{
             \item{Employs a \alert{computationally efficient} means of managing updates to cached data at global scale.}
