@@ -193,6 +193,56 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
 
 \section{Predictive Query Model}
 
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.13]{apollo_overview}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.13]{apollo_overview_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.13]{apollo_overview_3}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.13]{apollo_overview_4}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.13]{apollo_overview_5}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.13]{apollo_overview_6}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.13]{apollo_overview_7}
+    \end{figure}
+\end{frame}
+
+
 
 \begin{frame}[fragile]{A Query Submission}
     \begin{center}
@@ -204,7 +254,13 @@ O\_C\_ID = \cfbox{red}{3}
     \end{center}
 \end{frame}
 
-\begin{frame}[fragile]{Abstracting to Query Templates}
+
+\begin{frame}[fragile]{Query Templates}
+    Two query instances, $Q_1$, $Q_2$ share the same \alert{query template} if they have the same
+    query text modulo \emph{parameterizable constants}.
+\end{frame}
+
+\begin{frame}[fragile]{Abstracting Query Instances to Query Templates}
     \begin{center}
 SELECT \cfbox{red}{C\_ID} FROM CUSTOMER WHERE
 C\_UNAME = \textbf{?} and C\_PASSWD = \textbf{?}
@@ -213,6 +269,7 @@ SELECT MAX(O\_ID) FROM ORDERS WHERE
 O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{center}
 \end{frame}
+
 
 \begin{frame}[fragile]{Client Query Streams}
     \begin{figure}
@@ -259,6 +316,14 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
 
 \begin{frame}[fragile]{Client Query Streams}
     \begin{figure}
+        \includegraphics[scale=0.2]{apollo_client_query_stream_2_1}
+    \end{figure}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Client Query Streams}
+    \begin{figure}
         \includegraphics[scale=0.2]{apollo_client_query_stream_3}
     \end{figure}
 \end{frame}
@@ -280,7 +345,8 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
         \includegraphics[scale=0.2]{apollo_transition_graph}
     \end{figure}
     \visible<2->{
-        $P(Qt_{2}|Qt_{1};T\leq\Delta t) = \frac{75}{75} = 1$\\
+        Probability of seeing $Qt_{2}$ within sliding window after we've seen $Qt_{1}$:\\
+        $P(Qt_{2}|Qt_{1};T\leq\Delta t) = \frac{\textrm{times } Qt_{2} \textrm{ executed within window of } Qt_{1}}{\textrm{times } Qt_{1} \textrm{ executed}} =\frac{75}{75} = 1$\\
     }
     \visible<3->{
         $P(Qt_{3}|Qt_{1};T\leq\Delta t) = \frac{10}{50} = \frac{1}{5}$
@@ -292,7 +358,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \begin{itemize}
         \item{How often a query template is executed}
         \visible<2->{
-        \item{Which query templates are \alert{correlated} with each other. If correlation is sufficient high ($> \tau$ threshold), then we
+        \item{Which query templates are \alert{correlated} with each other. If correlation is sufficient high ($>$ correlation threshold), then we
         monitor input and output sets for the queries.}
         }
     \end{itemize}
@@ -331,7 +397,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Formalizing...}
+\begin{frame}[fragile]{Fully Defined Queries}
 A \alert{fully defined query template} (FDQ) $\mathit{Qt}_j$ has all of its inputs provided
 by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{Qt_i}_2, \ldots, \mathit{Qt_i}_m$.
 \end{frame}
@@ -350,8 +416,9 @@ by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{
 \end{frame}
 
 \begin{frame}[fragile]{On Write FDQs}
-    Although some write queries (INSERT/UPDATE/DELETE) \alert{could} be predicted, incorrect predictions would result
-    in modified database state that would need to be undone later.
+    Although some write queries (INSERT/UPDATE/DELETE) \alert{could} be predicted, incorrect predictive executions of such queries would result
+    in modified database state that would need to be undone later.\\
+
     By predictively executing only read queries, we keep our caching behaviour \alert{strictly complementary}.
 \end{frame}
 
@@ -413,62 +480,13 @@ Reload an ADQ after executing a write query if:
     }
     \visible<3->{
     \item{The ADQ is considered \alert{valuable}: \\
-$P(\mathit{Qt})\cdot C(\mathit{Qt}) \geq \alpha$
+        $P(\mathit{Qt})\cdot C(\mathit{Qt}) \geq \textrm{reload threshold}$
     }
     }
 \end{itemize}
 \end{frame}
 
 \section{Apollo}
-
-\begin{frame}[fragile]{Apollo Overview}
-    \begin{figure}
-        \hspace*{-1cm}
-        \includegraphics[scale=0.13]{apollo_overview}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Overview}
-    \begin{figure}
-        \hspace*{-1cm}
-        \includegraphics[scale=0.13]{apollo_overview_2}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Overview}
-    \begin{figure}
-        \hspace*{-1cm}
-        \includegraphics[scale=0.13]{apollo_overview_3}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Overview}
-    \begin{figure}
-        \hspace*{-1cm}
-        \includegraphics[scale=0.13]{apollo_overview_4}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Overview}
-    \begin{figure}
-        \hspace*{-1cm}
-        \includegraphics[scale=0.13]{apollo_overview_5}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Overview}
-    \begin{figure}
-        \hspace*{-1cm}
-        \includegraphics[scale=0.13]{apollo_overview_6}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Overview}
-    \begin{figure}
-        \hspace*{-1cm}
-        \includegraphics[scale=0.13]{apollo_overview_7}
-    \end{figure}
-\end{frame}
 
 \begin{frame}[fragile]{Apollo Architecture}
     \begin{figure}
@@ -512,25 +530,9 @@ $P(\mathit{Qt})\cdot C(\mathit{Qt}) \geq \alpha$
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Cache Matching}
-Key query results by \alert{hash of query template} and parameter values.
-\begin{itemize}
-    \item{Fast lookup for incoming queries}
-    \item{Avoids \alert{query containment}, but cannot use portions of result sets shared by other queries}
-\end{itemize}
-\end{frame}
-
 \begin{frame}[fragile]{Publish---Subscribe Model}
 Concurrent requests proxied to the remote DB or memcached for the same read-query will be blocked until the original query has returned.
 That query's result set will be \alert{forwarded} to the others.
-\end{frame}
-
-\begin{frame}[fragile]{Cache Invalidation}
-Standard approaches to invalidate caches will not scale globally!\\
-\medskip
-\visible<2->{
-Use \alert{client sessions} and Memcached's LRU to invalidate and implicitly evict
-}
 \end{frame}
 
 \begin{frame}[fragile]{Client Sessions}
@@ -563,44 +565,41 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
 
 \begin{frame}[fragile]{Benefits}
     \begin{itemize}
-        \item{Only \alert{local instance} needs to track client's session.}
         \item{No global cache invalidations.}
         \item{Can predict whether a prefetched query result will be used before invalidation!}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Session-Aware Caching}
+\begin{frame}[fragile]{Prediction Invalidation Detection}
     \begin{figure}
         \includegraphics[scale=0.22]{apollo_query_pipeline}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Session-Aware Caching}
+\begin{frame}[fragile]{Prediction Invalidation Detection}
     \begin{figure}
         \center
         \includegraphics[scale=0.22]{apollo_write_boundary}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Session-Aware Caching}
+\begin{frame}[fragile]{Prediction Invalidation Detection}
     \begin{figure}
         \center
         \includegraphics[scale=0.22]{apollo_write_boundary_2}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Session-Aware Caching}
-    Before predictively executing any FDQ $f$, check if there are upcoming writes that would
-    invalidate the results!
+\begin{frame}[fragile]{Prediction Invalidation Caching}
     \begin{itemize}
     \visible<2->{
     \item{Maintain multiple client query graphs with different $\Delta t$ widths}
-    \item{Find the query graph with width $\Delta t$ greater than that matches of $f$'s estimated response time}
-    \item{Crawl forward from client's last executed query and calculate likelihood of query occurring that will invalidate $f$}
+    \item{Consult client query graphs to see if a query is likely to occur that would invalidate the results of our predictively executed query}
     }
     \end{itemize}
 \end{frame}
 
+\begin{comment}
 \begin{frame}[fragile]{Example}
     \alert{Problem:}\\
     Result set from client submitted $\mathit{Qt}_1$ just came back. We have complete mappings from $\mathit{Qt}_1$ to
@@ -679,6 +678,7 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
         $\mathit{Qt}_w$ will increase the client's session, so predictively executing $\mathit{Qt}_3$ is unlikely to be useful.
     }
 \end{frame}
+\end{comment}
 
 \begin{frame}[allowframebreaks]
     \bibliographystyle{abbrv}
