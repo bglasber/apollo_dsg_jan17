@@ -539,10 +539,10 @@ That query's result set will be \alert{forwarded} to the others.
 Clients are guaranteed to see state at least as recent as what they last read/wrote.
     \begin{itemize}
     \visible<2->{
-    \item{\alert{Writes} and \alert{``future reads''} update client version and cause invalidations.}
+    \item{\alert{Client-centric} approach to caching!}
     }
     \visible<3->{
-    \item{\alert{Client-centric} approach to caching!}
+    \item{\alert{Writes} and \alert{``future reads''} update client version and cause invalidations.}
     }
     \end{itemize}
 \end{frame}
