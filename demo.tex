@@ -680,6 +680,64 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
 \end{frame}
 \end{comment}
 
+\section{Experiments}
+
+\begin{frame}[fragile]{Experiment Configuration}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.17]{apollo_exp_config}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Experiment Configuration}
+    Three configurations:
+    \begin{itemize}
+        \item{\alert{Apollo configuration:} as described in prior sections.}
+        \item{\alert{Memcached configuration:} Apollo with predictive features turned off --- becomes an LRU cache.}
+        \item{\alert{Fido configuration:} Use Fido predictive engine instead of Apollo's predictive features!}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Fido}
+    \begin{itemize}
+        \item{Query instance based predictions, instead of query templates.}
+            \begin{itemize}
+                \item{$Q_1, Q_2, Q_3$ in query stream.}
+                \item{Look for previous execution of queries prefixed by those: (i.e. $Q_1, Q_2, Q_3, Q_4, Q_5$), execute up to 10 predictions}
+                \item{Prefix length: 3, Suffix Length: 2}
+            \end{itemize}
+        \item{Requires offline training.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{TPC-W Results}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.7]{apollo_tpcw}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Learning Over Time}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.7]{apollo_30_intervals}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Workload Change}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.11]{apollo_wl_change}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Multiple Apollo Instances}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.7]{apollo_scalability_curve}
+    \end{figure}
+\end{frame}
+
 \begin{frame}[allowframebreaks]
     \bibliographystyle{abbrv}
     \bibliography{demo}
