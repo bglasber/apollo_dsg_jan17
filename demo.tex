@@ -15,6 +15,7 @@
 \usepackage{color}
 \usepackage{xcolor}
 \newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 
 \newcommand{\cfbox}[2]{%
     \colorlet{currentcolor}{.}%
@@ -91,7 +92,7 @@
 
 \begin{frame}{A Problem}
     \begin{itemize}
-        \item{Existing edge caches support only \alert{static data}!}
+        \item{Limited support for non-static data!}
         \visible<2->{
             \item{A majority of webpages rely on personalization and changing data!}
         }
@@ -553,7 +554,7 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     \item{\alert{Client-centric} approach to caching!}
     }
     \visible<3->{
-    \item{\alert{Writes} and \alert{``future reads''} update client version and cause invalidations.}
+    \item{\alert{Writes} and reads of ``fresher'' data cause invalidations.}
     }
     \end{itemize}
 \end{frame}
@@ -739,6 +740,34 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
         \center
         \includegraphics[scale=0.7]{apollo_scalability_curve}
     \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Thanks}
+\begin{centering}
+Questions?
+\end{centering}
+\end{frame}
+
+\begin{frame}[fragile]{Related Work (Systems)}
+\begin{table}
+\centering
+\begin{tabular}{lll}
+\toprule
+\multicolumn{3}{c}{Similarities and Differences Among Related Work} \\
+System & Similarities & Differences \\
+\midrule
+\textbf{Scalpel} & \multicolumn{1}{p{5cm}}{\tabitem{Prefetching via templates}} & \tabitem{Offline training}  \\
+& & \tabitem{Write Handling} \\
+& & \tabitem{Client-side} \\
+& & \tabitem{ADQs} \\
+\midrule
+\textbf{Fido} & \tabitem{Prefetching} & \tabitem{Offline training} \\
+& \tabitem{Server-side/middleware} & \tabitem{Query Instances} \\
+& & \tabitem{Write Handling} \\
+& & \tabitem{ADQs} \\
+\midrule
+\end{tabular}
+\end{table}
 \end{frame}
 
 \begin{frame}[allowframebreaks]
