@@ -178,17 +178,17 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
     \end{figure}
 \end{frame}
 
-\begin{frame}{Apollo: Caching Dynamic Data on a Global Scale}
+\begin{frame}{Apollo: Caching Dynamic Data}
     We developed Apollo, a middleware system that:
     \begin{itemize}
         \visible<2->{
-            \item{Uses \alert{online learning} to adapt cache behaviour based on client behaviour patterns.}
+            \item{Uses \alert{online learning} to discover client query patterns.}
         }
         \visible<3->{
-            \item{\alert{Predictively executes} and caches query results to reduce client response time.}
+            \item{\alert{Predictively executes} and caches query results using these patterns to reduce client response time.}
         }
         \visible<4->{
-            \item{Employs a \alert{computationally efficient} means of managing updates to cached data at global scale.}
+            \item{Employs a \alert{computationally efficient} means of managing updates to cached data.}
         }
     \end{itemize}
 \end{frame}
@@ -470,7 +470,7 @@ by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{
 \begin{frame}[fragile]{Predicting Write Queries}
     Although some write queries (INSERT/UPDATE/DELETE) \alert{could} be predicted, incorrect predictive executions of such queries would result
     in modified database state that would need to be undone later.\\
-
+    \medskip
     By predictively executing only read queries, we keep our caching behaviour \alert{strictly complementary}.
 \end{frame}
 
@@ -543,7 +543,7 @@ Reload an always defined query after executing a write query if:
 \end{frame}
 
 \begin{frame}[fragile]{Publish---Subscribe Model}
-Concurrent requests proxied to the remote DB or memcached for the same read-query will be blocked until the original query has returned.
+Concurrent requests of the same query will wait until the first query executes and returns its results.
 That query's result set will be \alert{forwarded} to the others.
 \end{frame}
 
@@ -554,7 +554,7 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     \item{\alert{Client-centric} approach to caching!}
     }
     \visible<3->{
-    \item{\alert{Writes} and reads of ``fresher'' data cause invalidations.}
+    \item{Only \alert{Writes} and reads of ``fresher'' data cause invalidations!}
     }
     \end{itemize}
 \end{frame}
@@ -597,7 +597,7 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
 \begin{frame}[fragile]{Prediction Invalidation Caching}
     \begin{itemize}
     \visible<2->{
-    \item{Maintain multiple client query graphs with different $\Delta t$ widths}
+    \item{Maintain multiple client query graphs with different window widths}
     \item{Consult client query graphs to see if a query is likely to occur that would invalidate the results of our predictively executed query}
     }
     \end{itemize}
@@ -703,14 +703,24 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
 \end{frame}
 
 \begin{frame}[fragile]{Fido}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.3]{apollo_fido_pred}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Fido}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.3]{apollo_fido_pred_2}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Fido}
     \begin{itemize}
-        \item{Query instance based predictions, instead of query templates.}
-            \begin{itemize}
-                \item{$Q_1, Q_2, Q_3$ in query stream.}
-                \item{Look for previous execution of queries prefixed by those: (i.e. $Q_1, Q_2, Q_3, Q_4, Q_5$), execute up to 10 predictions}
-                \item{Prefix length: 3, Suffix Length: 2}
-            \end{itemize}
-        \item{Requires offline training.}
+        \item{\alert{Query instance} based predictions, instead of query templates.}
+        \item{Prefix length: 3, Suffix Length: 2}
+        \item{Requires offline training (Supplied 40 minutes of data).}
     \end{itemize}
 \end{frame}
 
@@ -748,23 +758,38 @@ Questions?
 \end{centering}
 \end{frame}
 
+\begin{frame}[fragile]{Parameter Settings (TPC-W)}
+\begin{table}
+\centering
+\begin{tabular}{ll}
+Parameter & Setting \\
+\toprule
+Window Width & 15s \\
+Correlation Threshold & 0.99 \\
+Reload Threshold & 0 \\
+Cache Size & 5\% of DB \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{frame}
+
 \begin{frame}[fragile]{Related Work (Systems)}
 \begin{table}
 \centering
 \begin{tabular}{lll}
-\toprule
 \multicolumn{3}{c}{Similarities and Differences Among Related Work} \\
+\toprule
 System & Similarities & Differences \\
 \midrule
 \textbf{Scalpel} & \multicolumn{1}{p{5cm}}{\tabitem{Prefetching via templates}} & \tabitem{Offline training}  \\
 & & \tabitem{Write Handling} \\
 & & \tabitem{Client-side} \\
-& & \tabitem{ADQs} \\
+& & \tabitem{Query Rewriting} \\
 \midrule
 \textbf{Fido} & \tabitem{Prefetching} & \tabitem{Offline training} \\
 & \tabitem{Server-side/middleware} & \tabitem{Query Instances} \\
 & & \tabitem{Write Handling} \\
-& & \tabitem{ADQs} \\
 \midrule
 \end{tabular}
 \end{table}
