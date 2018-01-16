@@ -68,10 +68,13 @@
 \end{frame}
 
 \begin{frame}{Latency Effects on Clients}
-    Increased latency reduces \alert{user engagement}, and consequently \alert{revenue}!~\cite{bing}
+    Increased latency reduces \alert{user engagement}, and consequently \alert{revenue}! \\
+    \vspace{1cm}
+
+    \small{Schurman et al., ``Performance Related Changes and Their User Impact''. \emph{Velocity}, 2009.}
 \end{frame}
 
-\begin{frame}{Edge Caching}
+\begin{frame}{Edge Caching (Content Delivery Networks)}
     \begin{figure}
         \center
         \hspace*{-1.5cm}
@@ -90,9 +93,13 @@
     \begin{itemize}
         \item{Existing edge caches support only \alert{static data}!}
         \visible<2->{
-            \item{A majority of webpages rely on personalization and changing data!~\cite{dbproxy}}
+            \item{A majority of webpages rely on personalization and changing data!}
         }
     \end{itemize}
+    \vspace{1cm}
+    \visible<2->{
+    \small{Amiri et al., ``DBProxy: a dynamic data cache for web applications,'' \emph{ICDE}, 2003.}
+}
 \end{frame}
 
 \begin{frame}{Static Data Edge Cache Architecture}
@@ -124,7 +131,7 @@
     with what parameters.
 \end{frame}
 
-\begin{frame}[fragile]{Dynamic Data Requests}
+\begin{frame}[fragile]{Dynamic Data Requests (TPC-W Benchmark)}
     \begin{lstlisting}[
                    language=SQL,
                    basicstyle=\ttfamily,
@@ -139,7 +146,6 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
     \end{lstlisting}
 
 \begin{center}
-\tiny{Taken from the Order Display Interaction in the TPC-W Benchmark.}
 \end{center}
 \end{frame}
 
@@ -358,7 +364,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \begin{itemize}
         \item{How often a query template is executed}
         \visible<2->{
-        \item{Which query templates are \alert{correlated} with each other. If correlation is sufficient high ($>$ correlation threshold), then we
+        \item{Which query templates are \alert{correlated} with each other. If correlation is sufficiently high ($>$ correlation threshold), then we
         monitor input and output sets for the queries.}
         }
     \end{itemize}
@@ -397,6 +403,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
+\begin{comment}
 \begin{frame}[fragile]{Fully Defined Queries}
 A \alert{fully defined query template} (FDQ) $\mathit{Qt}_j$ has all of its inputs provided
 by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{Qt_i}_2, \ldots, \mathit{Qt_i}_m$.
@@ -415,12 +422,7 @@ by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{
     }
 \end{frame}
 
-\begin{frame}[fragile]{On Write FDQs}
-    Although some write queries (INSERT/UPDATE/DELETE) \alert{could} be predicted, incorrect predictive executions of such queries would result
-    in modified database state that would need to be undone later.\\
-
-    By predictively executing only read queries, we keep our caching behaviour \alert{strictly complementary}.
-\end{frame}
+\end{comment}
 
 \begin{frame}[fragile]{Core Prediction Routine}
     \begin{figure}
@@ -464,23 +466,32 @@ by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{
     \end{figure}
 \end{frame}
 
+\begin{frame}[fragile]{Predicting Write Queries}
+    Although some write queries (INSERT/UPDATE/DELETE) \alert{could} be predicted, incorrect predictive executions of such queries would result
+    in modified database state that would need to be undone later.\\
+
+    By predictively executing only read queries, we keep our caching behaviour \alert{strictly complementary}.
+\end{frame}
+
+
+
 \begin{frame}[fragile]{Always Defined Queries}
-    An \alert{always defined query} (ADQ) is an FDQ where all of its prior queries (recursively) are also FDQs.\\
+    An \alert{always defined query} is a query whose inputs are always satisfied.
 \medskip
     \visible<2->{
-       In other words, its dependencies are \alert{always satisfied}, and the query can be executed and cached at any time!
+       The query can be executed and cached at any time!
     }
 \end{frame}
 
-\begin{frame}[fragile]{ADQ Reload}
-Reload an ADQ after executing a write query if:
+\begin{frame}[fragile]{Reloading Always Defined Queries}
+Reload an always defined query after executing a write query if:
 \begin{itemize}
     \visible<2->{
-    \item{The ADQ is \alert{not} already cached}
+    \item{The query was invalidated!}
     }
     \visible<3->{
-    \item{The ADQ is considered \alert{valuable}: \\
-        $P(\mathit{Qt})\cdot C(\mathit{Qt}) \geq \textrm{reload threshold}$
+    \item{The query is considered \alert{valuable}: \\
+        $likelihood\_of\_query(\mathit{Qt})\cdot avg\_response\_time(\mathit{Qt}) \geq \textrm{reload threshold}$
     }
     }
 \end{itemize}
@@ -545,14 +556,6 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     \item{\alert{Writes} and \alert{``future reads''} update client version and cause invalidations.}
     }
     \end{itemize}
-\end{frame}
-
-\begin{frame}{Benefits}
-    \begin{figure}
-        \center
-        \hspace*{-1.5cm}
-        \includegraphics[scale=0.17]{apollo_ec_dbl}
-    \end{figure}
 \end{frame}
 
 \begin{frame}{Benefits}
@@ -693,7 +696,7 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     Three configurations:
     \begin{itemize}
         \item{\alert{Apollo configuration:} as described in prior sections.}
-        \item{\alert{Memcached configuration:} Apollo with predictive features turned off --- becomes an LRU cache.}
+        \item{\alert{Memcached configuration:} LRU cache --- Apollo with predictive features turned off}
         \item{\alert{Fido configuration:} Use Fido predictive engine instead of Apollo's predictive features!}
     \end{itemize}
 \end{frame}
