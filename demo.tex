@@ -597,8 +597,8 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
 \begin{frame}[fragile]{Prediction Invalidation Caching}
     \begin{itemize}
     \visible<2->{
-    \item{Maintain multiple client query graphs with different window widths}
-    \item{Consult client query graphs to see if a query is likely to occur that would invalidate the results of our predictively executed query}
+    \item{Maintain multiple client transition graphs with different window widths}
+    \item{Consult client query transition to see if a query is likely to occur that would invalidate the results of our predictively executed query}
     }
     \end{itemize}
 \end{frame}
