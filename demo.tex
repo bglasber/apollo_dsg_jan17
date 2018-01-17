@@ -356,7 +356,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
         $P(Qt_{2}|Qt_{1};T\leq\Delta t) = \frac{\textrm{times } Qt_{2} \textrm{ executed within window of } Qt_{1}}{\textrm{times } Qt_{1} \textrm{ executed}} =\frac{75}{75} = 1$\\
     }
     \visible<3->{
-        $P(Qt_{3}|Qt_{1};T\leq\Delta t) = \frac{10}{50} = \frac{1}{5}$
+        $P(Qt_{1}|Qt_{3};T\leq\Delta t) = \frac{10}{50} = \frac{1}{5}$
     }
 \end{frame}
 
@@ -554,7 +554,7 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     \item{\alert{Client-centric} approach to caching!}
     }
     \visible<3->{
-    \item{Only \alert{Writes} and reads of ``fresher'' data cause invalidations!}
+    \item{Only \alert{writes} and reads of ``fresher'' data cause invalidations!}
     }
     \end{itemize}
 \end{frame}
@@ -745,17 +745,17 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     \end{figure}
 \end{frame}
 
+\begin{frame}[fragile]{Thanks}
+\begin{centering}
+Questions?
+\end{centering}
+\end{frame}
+
 \begin{frame}[fragile]{Multiple Apollo Instances}
     \begin{figure}
         \center
         \includegraphics[scale=0.7]{apollo_scalability_curve}
     \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Thanks}
-\begin{centering}
-Questions?
-\end{centering}
 \end{frame}
 
 \begin{frame}[fragile]{Parameter Settings (TPC-W)}
