@@ -327,8 +327,6 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
-
-
 \begin{frame}[fragile]{Client Query Streams}
     \begin{figure}
         \includegraphics[scale=0.2]{apollo_client_query_stream_3}
@@ -405,25 +403,6 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
 \end{frame}
 
 \begin{comment}
-\begin{frame}[fragile]{Fully Defined Queries}
-A \alert{fully defined query template} (FDQ) $\mathit{Qt}_j$ has all of its inputs provided
-by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{Qt_i}_2, \ldots, \mathit{Qt_i}_m$.
-\end{frame}
-
-\begin{frame}[fragile]{Example FDQs}
-    \begin{figure}
-        \includegraphics[scale=0.22]{apollo_query_pipeline}
-    \end{figure}
-    \visible<2->{
-        $\mathit{Qt}_2$ and $\mathit{Qt}_3$ are FDQs.\\
-    }
-    \visible<3->{
-        $\mathit{Qt}_1$ is a dependency query of $\mathit{Qt}_2$.\\
-        $\mathit{Qt}_2$ is a dependency query of $\mathit{Qt}_3$.\\
-    }
-\end{frame}
-
-\end{comment}
 
 \begin{frame}[fragile]{Core Prediction Routine}
     \begin{figure}
@@ -467,85 +446,9 @@ by some set, possibly empty, of prior query templates $\mathit{Qt_i}_1, \mathit{
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Predicting Write Queries}
-    Although some write queries (INSERT/UPDATE/DELETE) \alert{could} be predicted, incorrect predictive executions of such queries would result
-    in modified database state that would need to be undone later.\\
-    \medskip
-    By predictively executing only read queries, we keep our caching behaviour \alert{strictly complementary}.
-\end{frame}
-
-
-
-\begin{frame}[fragile]{Always Defined Queries}
-    An \alert{always defined query} is a query whose inputs are always satisfied.
-\medskip
-    \visible<2->{
-       The query can be executed and cached at any time!
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Reloading Always Defined Queries}
-Reload an always defined query after executing a write query if:
-\begin{itemize}
-    \visible<2->{
-    \item{The query was invalidated!}
-    }
-    \visible<3->{
-    \item{The query is considered \alert{valuable}: \\
-        $likelihood\_of\_query(\mathit{Qt})\cdot avg\_response\_time(\mathit{Qt}) \geq \textrm{reload threshold}$
-    }
-    }
-\end{itemize}
-\end{frame}
+\end{comment}
 
 \section{Apollo}
-
-\begin{frame}[fragile]{Apollo Architecture}
-    \begin{figure}
-        \includegraphics[scale=0.17]{apollo_arch_diagram}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Architecture}
-    \begin{figure}
-        \includegraphics[scale=0.17]{apollo_arch_diagram_2}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Architecture}
-    \begin{figure}
-        \includegraphics[scale=0.17]{apollo_arch_diagram_3}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Architecture}
-    \begin{figure}
-        \includegraphics[scale=0.17]{apollo_arch_diagram_4}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Architecture}
-    \begin{figure}
-        \includegraphics[scale=0.17]{apollo_arch_diagram_6}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Architecture}
-    \begin{figure}
-        \includegraphics[scale=0.17]{apollo_arch_diagram_7}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Apollo Architecture}
-    \begin{figure}
-        \includegraphics[scale=0.17]{apollo_arch_diagram_8}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Publish---Subscribe Model}
-Concurrent requests for the same query will wait until the first query executes and returns its results.
-That query's result set will be \alert{forwarded} to the others.
-\end{frame}
 
 \begin{frame}[fragile]{Client Sessions}
 Clients are guaranteed to see state at least as recent as what they last read/wrote.
@@ -573,116 +476,6 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
         \item{Can predict whether a prefetched query result will be used before invalidation!}
     \end{itemize}
 \end{frame}
-
-\begin{frame}[fragile]{Prediction Invalidation Detection}
-    \begin{figure}
-        \includegraphics[scale=0.22]{apollo_query_pipeline}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Prediction Invalidation Detection}
-    \begin{figure}
-        \center
-        \includegraphics[scale=0.22]{apollo_write_boundary}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Prediction Invalidation Detection}
-    \begin{figure}
-        \center
-        \includegraphics[scale=0.22]{apollo_write_boundary_2}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Prediction Invalidation Caching}
-    \begin{itemize}
-    \visible<2->{
-    \item{Maintain multiple client transition graphs with different window widths}
-    \item{Consult client query transition to see if a query is likely to occur that would invalidate the results of our predictively executed query}
-    }
-    \end{itemize}
-\end{frame}
-
-\begin{comment}
-\begin{frame}[fragile]{Example}
-    \alert{Problem:}\\
-    Result set from client submitted $\mathit{Qt}_1$ just came back. We have complete mappings from $\mathit{Qt}_1$ to
-    $\mathit{Qt}_2$ and from $\mathit{Qt}_2$ to $\mathit{Qt}_3$. Each query template takes an average of $t=2$ to execute. Do we execute $\mathit{Qt}_2$?
-    Do we execute $\mathit{Qt}_3$?
-\end{frame}
-
-\begin{frame}[fragile]{Do we execute $\mathit{Qt}_2$?}
-    $\mathit{Qt}_2$ is estimated to take $t=2$ to execute.
-    \visible<2>{
-        \begin{figure}
-            \center
-            \includegraphics[scale=0.17]{apollo_session_aware_caching}
-        \end{figure}
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Do we execute $\mathit{Qt}_2$?}
-    $\mathit{Qt}_2$ is estimated to take $t=2$ to execute.
-    \begin{figure}
-        \center
-        \includegraphics[scale=0.17]{apollo_session_aware_caching_2}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Follow out-arrows from $\mathit{Qt}_1$}
-    \begin{figure}
-        \center
-        \includegraphics[scale=0.3]{apollo_session_aware_caching_3}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Follow out-arrows from $\mathit{Qt}_1$}
-    \begin{figure}
-        \center
-        \includegraphics[scale=0.3]{apollo_session_aware_caching_4}
-    \end{figure}
-    \visible<2->{
-        $\mathit{Qt}_2$ is likely ($P(\mathit{Qt}_2|\mathit{Qt}_1;T\leq 2)=1.0$) to show up within $t=2$.\\
-        No queries predicted to invalidate the $\mathit{Qt}_2$'s result set, so execute it and cache it.
-    }
-\end{frame}
-
-\begin{frame}[fragile]{What about $\mathit{Qt}_3$?}
-    \begin{figure}
-        \includegraphics[scale=0.22]{apollo_query_pipeline}
-    \end{figure}
-    After $\mathit{Qt}_2$ has executed, should we execute $\mathit{Qt}_3$? \\
-    \visible<2->{
-        $\mathit{Qt}_3$ is estimated to take $t=2$ to execute.\\
-    }
-\end{frame}
-
-\begin{frame}[fragile]{Do we execute $\mathit{Qt}_2$?}
-    $\mathit{Qt}_3$ is estimated to take $t=2$ to execute.
-    \begin{figure}
-        \center
-        \includegraphics[scale=0.17]{apollo_session_aware_caching_2}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Follow out-arrows from $\mathit{Qt}_2$}
-    \begin{figure}
-        \center
-        \includegraphics[scale=0.27]{apollo_session_aware_caching_3}
-    \end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Follow out-arrows from $\mathit{Qt}_2$}
-    \begin{figure}
-        \center
-        \includegraphics[scale=0.27]{apollo_session_aware_caching_5}
-    \end{figure}
-    \visible<2->{
-        $\mathit{Qt}_w$ is likely ($P(\mathit{Qt}_w|\mathit{Qt}_2;T\leq 2)=0.75$) to show up within $t=2$.\\
-        $\mathit{Qt}_w$ will increase the client's session, so predictively executing $\mathit{Qt}_3$ is unlikely to be useful.
-    }
-\end{frame}
-\end{comment}
 
 \section{Experiments}
 
