@@ -39,14 +39,6 @@
 \includegraphics[keepaspectratio=true,width=1.03\paperwidth]{title_slide}
 \end{frame}
 
-\begin{frame}{Simple Web Application Architecture}
-    \begin{figure}
-        \center
-        \hspace*{-1cm}
-        \includegraphics[scale=0.2]{apollo_intro_arch}
-    \end{figure}
-\end{frame}
-
 \begin{frame}{Worldwide Client/Data Center Distribution}
     \begin{figure}
         \center
@@ -103,6 +95,15 @@
 }
 \end{frame}
 
+\begin{comment}
+\begin{frame}{Worldwide Client/Edge Node Distribution}
+    \begin{figure}
+        \center
+        \includegraphics[scale=0.45]{apollo_google_oceania_en}
+    \end{figure}
+\end{frame}
+\end{comment}
+
 \begin{frame}{Static Data Edge Cache Architecture}
     \begin{figure}
         \center
@@ -125,11 +126,6 @@
         \hspace*{-1.5cm}
         \includegraphics[scale=0.17]{apollo_ec_dbl_learn}
     \end{figure}
-\end{frame}
-
-\begin{frame}{Query Patterns}
-    Execution of a query informs which queries will execute next, and
-    with what parameters.
 \end{frame}
 
 \begin{frame}[fragile]{Dynamic Data Requests (TPC-W Benchmark)}
@@ -261,7 +257,6 @@ O\_C\_ID = \cfbox{red}{3}
     \end{center}
 \end{frame}
 
-
 \begin{frame}[fragile]{Query Templates}
     Two query instances, $Q_1$, $Q_2$ share the same \alert{query template} if they have the same
     query text modulo \emph{parameterizable constants}.
@@ -358,6 +353,8 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     }
 \end{frame}
 
+\begin{comment}
+
 \begin{frame}[fragile]{Query Transition Graph}
     The query transition graphs tells us:
     \begin{itemize}
@@ -371,6 +368,8 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
         { \color{red} Need parameter mappings for predictive caching!}
     }
 \end{frame}
+
+\end{comment}
 
 \begin{frame}[fragile]{Client Query Streams}
     \begin{figure}
@@ -448,7 +447,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
 
 \end{comment}
 
-\section{Apollo}
+\section{Client Sessions and Invalidation}
 
 \begin{frame}[fragile]{Client Sessions}
 Clients are guaranteed to see state at least as recent as what they last read/wrote.
@@ -474,7 +473,9 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     \begin{itemize}
         \item{No global cache invalidations.}
         \item{Can predict whether a prefetched query result will be used before invalidation!}
+        \item{Reloading queries upon invalidation}
     \end{itemize}
+   \alert{See paper for details!}
 \end{frame}
 
 \section{Experiments}
