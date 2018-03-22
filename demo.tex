@@ -39,6 +39,15 @@
 \includegraphics[keepaspectratio=true,width=1.03\paperwidth]{title_slide}
 \end{frame}
 
+\begin{frame}{Simple Web Application Architecture}
+    \begin{figure}
+        \center
+        \hspace*{-1cm}
+        \includegraphics[scale=0.2]{apollo_intro_arch}
+    \end{figure}
+\end{frame}
+
+
 \begin{frame}{Worldwide Client/Data Center Distribution}
     \begin{figure}
         \center
@@ -82,17 +91,10 @@
     \end{figure}
 \end{frame}
 
-\begin{frame}{A Problem}
+\begin{frame}{Content Delivery Networks --- A Silver Bullet?}
     \begin{itemize}
         \item{Limited support for non-static data!}
-        \visible<2->{
-            \item{A majority of webpages rely on personalization and changing data!}
-        }
     \end{itemize}
-    \vspace{1cm}
-    \visible<2->{
-    \small{Amiri et al., ``DBProxy: a dynamic data cache for web applications,'' \emph{ICDE}, 2003.}
-}
 \end{frame}
 
 \begin{comment}
@@ -395,14 +397,6 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Query Dependency Graph}
-    \begin{figure}
-        \includegraphics[scale=0.22]{apollo_query_pipeline}
-    \end{figure}
-\end{frame}
-
-\begin{comment}
-
 \begin{frame}[fragile]{Core Prediction Routine}
     \begin{figure}
         \hspace*{-1cm}
@@ -445,23 +439,18 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
-\end{comment}
-
 \section{Client Sessions and Invalidation}
 
 \begin{frame}[fragile]{Client Sessions}
-Clients are guaranteed to see state at least as recent as what they last read/wrote.
+Put image here.
     \begin{itemize}
     \visible<2->{
     \item{\alert{Client-centric} approach to caching!}
     }
-    \visible<3->{
-    \item{Only \alert{writes} and reads of ``fresher'' data cause invalidations!}
-    }
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Benefits}
+\begin{frame}{Benefits of Client-Centric Caching}
     \begin{figure}
         \center
         \hspace*{-1.5cm}
@@ -469,9 +458,8 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Benefits}
+\begin{frame}[fragile]{Benefits of Client-Centric Caching}
     \begin{itemize}
-        \item{No global cache invalidations.}
         \item{Can predict whether a prefetched query result will be used before invalidation!}
         \item{Reloading queries upon invalidation}
     \end{itemize}
@@ -539,7 +527,8 @@ Clients are guaranteed to see state at least as recent as what they last read/wr
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Thanks}
+\begin{frame}[fragile]{Predictive Caching \emph{Works}}
+Broad conclusions
 \begin{centering}
 Questions?
 \end{centering}
