@@ -1,4 +1,4 @@
-\documentclass[10pt]{beamer}
+\documentclass[12pt]{beamer}
 
 \usetheme[progressbar=frametitle]{metropolis}
 \usepackage{appendixnumberbeamer}
@@ -198,6 +198,8 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
 
 \section{Predictive Query Model}
 
+
+\begin{comment} 
 \begin{frame}[fragile]{Apollo Overview}
     \begin{figure}
         \hspace*{-1cm}
@@ -244,6 +246,14 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
     \begin{figure}
         \hspace*{-1cm}
         \includegraphics[scale=0.13]{apollo_overview_7}
+    \end{figure}
+\end{frame}
+
+\end{comment}
+
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \includegraphics[scale=0.18]{apollo_overview_simplified}
     \end{figure}
 \end{frame}
 
@@ -318,11 +328,13 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
+\begin{comment}
 \begin{frame}[fragile]{Client Query Streams}
     \begin{figure}
         \includegraphics[scale=0.2]{apollo_client_query_stream_2_1}
     \end{figure}
 \end{frame}
+\end{comment}
 
 \begin{frame}[fragile]{Client Query Streams}
     \begin{figure}
@@ -397,7 +409,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Core Prediction Routine}
+\begin{frame}[fragile]{Dependency Graph}
     \begin{figure}
         \hspace*{-1cm}
         \includegraphics[scale=0.22]{apollo_cpr}
@@ -439,13 +451,33 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
-\section{Client Sessions and Invalidation}
+\section{Invalidation}
 
-\begin{frame}[fragile]{Client Sessions}
-Put image here.
-    \begin{itemize}
+\begin{frame}[fragile]{Client-Centric Caching}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.19]{apollo_client_sessions_simplified}
+    \end{figure}
+    \bigskip
+    \medskip
+    \smallskip
+    \bigskip
+    \medskip
+    \smallskip
+\end{frame}
+
+\begin{frame}[fragile]{Client-Centric Caching}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.19]{apollo_client_sessions_simplified_2}
+    \end{figure}
     \visible<2->{
-    \item{\alert{Client-centric} approach to caching!}
+    Alice should \alert{see her own order}, but does not care about Bob's!
+    }
+    \begin{itemize}
+    \visible<3->{
+        \item{Improves cache performance, \alert{client-centric} model}
+        \item{Support for reading latest data if needed}
     }
     \end{itemize}
 \end{frame}
