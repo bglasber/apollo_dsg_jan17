@@ -471,9 +471,11 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
         \hspace*{-1cm}
         \includegraphics[scale=0.19]{apollo_client_sessions_simplified_2}
     \end{figure}
+    \vspace{-1cm}
     \visible<2->{
     Alice should \alert{see her own order}, but does not care about Bob's!
     }
+    \vspace{-0.5cm}
     \begin{itemize}
     \visible<3->{
         \item{Improves cache performance, \alert{client-centric} model}
@@ -485,6 +487,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
 \begin{frame}{Benefits of Client-Centric Caching}
     \begin{figure}
         \center
+        \vspace{-1cm}
         \hspace*{-1.5cm}
         \includegraphics[scale=0.17]{apollo_ec_upd}
     \end{figure}
@@ -498,7 +501,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
    \alert{See paper for details!}
 \end{frame}
 
-\section{Experiments}
+\section{Results}
 
 \begin{frame}[fragile]{Experiment Configuration}
     \begin{figure}
@@ -541,21 +544,21 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
 \begin{frame}[fragile]{TPC-W Results}
     \begin{figure}
         \center
-        \includegraphics[scale=0.7]{apollo_tpcw}
+        \includegraphics[scale=0.8]{apollo_tpcw}
     \end{figure}
 \end{frame}
 
 \begin{frame}[fragile]{Learning Over Time}
     \begin{figure}
         \center
-        \includegraphics[scale=0.7]{apollo_30_intervals}
+        \includegraphics[scale=0.8]{apollo_30_intervals}
     \end{figure}
 \end{frame}
 
 \begin{frame}[fragile]{Workload Change}
     \begin{figure}
         \center
-        \includegraphics[scale=0.11]{apollo_wl_change}
+        \includegraphics[scale=0.14]{apollo_wl_change}
     \end{figure}
 \end{frame}
 
