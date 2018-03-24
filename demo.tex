@@ -34,9 +34,9 @@
 \begin{document}
 
 \begin{frame}{}
-\vspace*{-0.2cm}
-\hspace*{-1.07cm}
-\includegraphics[keepaspectratio=true,width=1.03\paperwidth]{title_slide}
+\vspace*{-0.1cm}
+\hspace*{-1.1cm}
+\includegraphics[keepaspectratio=true,width=1.01\paperwidth]{title_slide}
 \end{frame}
 
 \begin{frame}{Simple Web Application Architecture}
@@ -253,9 +253,16 @@ O_C_ID = (*@ \cfbox{red}{@C\_ID} @*)
 
 \begin{frame}[fragile]{Apollo Overview}
     \begin{figure}
-        \includegraphics[scale=0.18]{apollo_overview_simplified}
+        \includegraphics[scale=0.16]{apollo_overview_simplified}
     \end{figure}
 \end{frame}
+
+\begin{frame}[fragile]{Apollo Overview}
+    \begin{figure}
+        \includegraphics[scale=0.16]{apollo_overview_simplified_2}
+    \end{figure}
+\end{frame}
+
 
 
 
@@ -360,7 +367,7 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
     \visible<2->{
         Probability of seeing $Qt_{2}$ within sliding window after we've seen $Qt_{1}$:\\
-        $P(Qt_{2}|Qt_{1};T\leq\Delta t) = \frac{\textrm{times } Qt_{2} \textrm{ executed within window of } Qt_{1}}{\textrm{times } Qt_{1} \textrm{ executed}} =\frac{75}{75} = 1$\\
+        $P(Qt_{2}|Qt_{1};T\leq\Delta t) = \frac{75}{75} = 1$\\
     }
     \visible<3->{
         $P(Qt_{1}|Qt_{3};T\leq\Delta t) = \frac{10}{50} = \frac{1}{5}$
@@ -416,42 +423,56 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Core Prediction Routine}
+\begin{frame}[fragile]{Prediction Routine}
     \begin{figure}
         \hspace*{-1cm}
         \includegraphics[scale=0.22]{apollo_cpr_2}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Core Prediction Routine}
+\begin{frame}[fragile]{Prediction Routine}
     \begin{figure}
         \hspace*{-1cm}
         \includegraphics[scale=0.22]{apollo_cpr_3}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Core Prediction Routine}
+\begin{frame}[fragile]{Prediction Routine}
     \begin{figure}
         \hspace*{-1cm}
         \includegraphics[scale=0.22]{apollo_cpr_4}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Core Prediction Routine}
+\begin{frame}[fragile]{Prediction Routine}
     \begin{figure}
         \hspace*{-1cm}
         \includegraphics[scale=0.22]{apollo_cpr_5}
     \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Core Prediction Routine}
+\begin{frame}[fragile]{Prediction Routine}
     \begin{figure}
         \hspace*{-1cm}
-        \includegraphics[scale=0.22]{apollo_cpr}
+        \includegraphics[scale=0.22]{apollo_cpr_6}
     \end{figure}
 \end{frame}
 
-\section{Invalidation}
+\begin{frame}[fragile]{Prediction Routine}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.22]{apollo_cpr_7}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Prediction Routine}
+    \begin{figure}
+        \hspace*{-1cm}
+        \includegraphics[scale=0.22]{apollo_cpr_8}
+    \end{figure}
+\end{frame}
+
+\section{Cache Management}
 
 \begin{frame}[fragile]{Client-Centric Caching}
     \begin{figure}
@@ -563,10 +584,10 @@ O\_C\_ID = \cfbox{red}{\textbf{?}}
 \end{frame}
 
 \begin{frame}[fragile]{Predictive Caching \emph{Works}}
-Broad conclusions
-\begin{centering}
-Questions?
-\end{centering}
+    \begin{itemize}
+        \item{\alert{Online learning} enables workload pattern discovery and adapts to client behaviour changes}
+        \item{\alert{Predictive caching} is an effective tool to reduce application latency}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Multiple Apollo Instances}
